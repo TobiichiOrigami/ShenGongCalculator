@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>練神功計算器</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"
+        integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">練神功計算器</a>
+    </nav>
+
+    <div class="container">
+        <div class="alert alert-success" role="alert">
+            每三分鐘自動刷新計算結果
+        </div>
+
+        <div class="jumbotron">
+            <h1>我最多能打</h1>
+            <P class="display-3" id="points"></P>
+            <h1>分</h1>
+            <hr class="my-4">
+            <h1>總包子數量</h1>
+            <P class="display-4" id="totalDumplings"></P>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="startFrom0">
+                        <label class="custom-control-label" for="startFrom0">從午夜12點開始計算(未啟用則自動從現在算起)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="eventEndTomorrow" checked="checked">
+                        <label class="custom-control-label" for="eventEndTomorrow">雙日活動(未啟用視為單日活動)</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <div class="custom-control custom-switch">
+                        <input type="checkbox" class="custom-control-input" id="hasWeapon" data-toggle="collapse"
+                            data-target="#collapseWeaponAdvanced" aria-expanded="false"
+                            aria-controls="collapseWeaponAdvanced">
+                        <label class="custom-control-label" for="hasWeapon">啟用神兵加成(50%)</label>
+                    </div>
+                </div>
+
+                <div class="collapse" id="collapseWeaponAdvanced">
+                    <div class="card card-body">
+                        <div class="form-group">
+                            <div class="custom-control custom-switch">
+                                <input type="checkbox" class="custom-control-input" id="beggar">
+                                <label class="custom-control-label" for="beggar">我是丐幫弟子</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="weaponDurability">神兵耐久</label>
+                            <input type="number" class="form-control" id="weaponDurability" value="0" min="0">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <label for="bossLevel">打等級多少的王</label>
+                    <input type="number" class="form-control" id="bossLevel" value="230" min="5" step="5">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <label for="dumplingQ">我有多少包子</label>
+                    <input type="number" class="form-control" id="dumplingQ" value="500" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <label for="adQ">今天還有多少包子廣告沒看</label>
+                    <input type="number" class="form-control" id="adQ" value="10" max="10" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <label for="flowers">活動結束前可以送幾朵花</label>
+                    <input type="number" class="form-control" id="flowers" value="6" max="20" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <label for="buy">活動結束前可以買幾次包子</label>
+                    <input type="number" class="form-control" id="buy" value="0" max="32" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <label for="dumplingToolQ">我有多少一屜包子道具</label>
+                    <input type="number" class="form-control" id="dumplingToolQ" value="0" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <label for="double">我有多少雙倍券</label>
+                    <input type="number" class="form-control" id="double" value="0" min="0">
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col col-md-4">
+                <div class="form-group">
+                    <label for="womanBuff">紅顏加成</label>
+                    <div class="input-group">
+                        <input type="number" class="form-control" id="womanBuff" value="0" min="0">
+                        <span class="input-group-addon">%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2022 Copyright：Yang Po-Han
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-fQybjgWLrvvRgtW6bFlB7jaZrFsaBXjsOMm/tB9LTS58ONXgqbR9W8oWht/amnpF"
+        crossorigin="anonymous"></script>
+    <script>
+        $(function () {
+            listeners();
+            calculate();
+            setInterval(calculate, 180000);
+        });
+
+        // 事件監聽
+        function listeners(){
+            //從午夜開始計算監聽
+            $('#startFrom0').on('change', function(){
+                calculate();
+            });
+
+            //活動今天結束監聽
+            $('#eventEndTomorrow').on('change', function(){
+                calculate();
+            });
+
+            //啟用神兵加成監聽
+            $('#hasWeapon').on('change', function(){
+                calculate();
+            });
+
+            //丐幫監聽
+            $('#beggar').on('change', function(){
+                calculate();
+            });
+
+            //神兵耐久監聽
+            $('#weaponDurability').on('change', function(){
+                var nowValue = this.value;
+                nowValue = Math.round(nowValue);
+                if(nowValue < 0){
+                    nowValue = 0;
+                }
+                $('#weaponDurability').val(nowValue);
+
+                calculate();
+            });
+
+            //王等級監聽
+            $('#bossLevel').on('change', function(){
+                var nowValue = this.value;
+                nowValue = Math.round(nowValue);
+                var diff = nowValue % 5;
+                if(diff != 0){
+                    nowValue -= diff;
+                }
+                if(nowValue < 5){
+                    nowValue = 230;
+                }
+                $('#bossLevel').val(nowValue);
+
+                calculate();
+            });
+
+            //包子數量監聽
+            $('#dumplingQ').on('change', function(){
+                var nowValue = this.value;
+                nowValue = Math.round(nowValue);
+                if(nowValue < 0){
+                    nowValue = 0;
+                }
+                $('#dumplingQ').val(nowValue);
+
+                calculate();
+            });
+
+            //包子廣告數量監聽
+            $('#adQ').on('change', function(){
+                var nowValue = this.value;
+                nowValue = Math.round(nowValue);
+                if(nowValue < 0){
+                    nowValue = 0;
+                }
+                if(nowValue > 10){
+                    nowValue = 10;
+                }
+                $('#adQ').val(nowValue);
+
+                calculate();
+            });
+
+            //送花數量監聽
+            $('#flowers').on('change', function(){
+                var nowValue = this.value;
+                nowValue = Math.round(nowValue);
+                if(nowValue < 0){
+                    nowValue = 0;
+                }
+                if(nowValue > 20){
+                    nowValue = 20;
+                }
+                $('#flowers').val(nowValue);
+
+                calculate();
+            });
+
+            //買包子次數數量監聽
+            $('#buy').on('change', function(){
+                var nowValue = this.value;
+                nowValue = Math.round(nowValue);
+                if(nowValue < 0){
+                    nowValue = 0;
+                }
+                if(nowValue > 32){
+                    nowValue = 32;
+                }
+                $('#buy').val(nowValue);
+
+                calculate();
+            });
+
+            //一屜包子道具數量監聽
+            $('#dumplingToolQ').on('change', function(){
+                var nowValue = this.value;
+                nowValue = Math.round(nowValue);
+                if(nowValue < 0){
+                    nowValue = 0;
+                }
+                $('#dumplingToolQ').val(nowValue);
+
+                calculate();
+            });
+
+            //雙倍券數量監聽
+            $('#double').on('change', function(){
+                var nowValue = this.value;
+                nowValue = Math.round(nowValue);
+                if(nowValue < 0){
+                    nowValue = 0;
+                }
+                $('#double').val(nowValue);
+
+                calculate();
+            });
+
+            //紅顏加成監聽
+            $('#womanBuff').on('change', function(){
+                var nowValue = this.value;
+                nowValue = Math.round(nowValue);
+                if(nowValue < 0){
+                    nowValue = 0;
+                }
+                $('#womanBuff').val(nowValue);
+
+                calculate();
+            });
+        }
+
+        function calculate(){
+            var totalPoints = 0; //總分
+            var totalD = 0; //總包子數
+
+            var startFrom0 = $('#startFrom0').is(":checked"); //從午夜開始計算是否勾選
+            var eventEndTomorrow = $('#eventEndTomorrow').is(":checked"); //活動明天結束是否勾選
+            var enableWeapon = $('#hasWeapon').is(":checked"); //啟用神兵是否勾選
+
+            var bossLevel = parseInt($('#bossLevel').val()); //王等級
+            var dumplingQ = parseInt($('#dumplingQ').val()); //包子數
+            var adQ = parseInt($('#adQ').val()); //今日包子廣告剩餘數
+            var flowers = parseInt($('#flowers').val()); //送花次數
+            var buy = parseInt($('#buy').val()); //購買包子次數
+            var dumplingToolQ = parseInt($('#dumplingToolQ').val()); //一屜包子數量
+            var doubles = parseInt($('#double').val()); //雙倍券數量
+            var womanBuff = parseInt($('#womanBuff').val()) / 100.0; //紅顏加成
+
+            var chairBuffP = Math.floor(bossLevel * 0.5); //椅子加成分
+            var doubleBuffP  = Math.floor(bossLevel * 2); //雙倍券加成分
+            var womanBuffP  = Math.floor(bossLevel * womanBuff); //紅顏加成分
+
+            //現在時間
+            var now = Date.now();
+            var nowTime = new Date(now);
+            var endTime = new Date(now);
+            endTime.setDate(nowTime.getDate() + 2);
+            endTime.setHours(0, 0, 0, 0);
+            var today12 = new Date(now);
+            today12.setHours(12, 0, 0, 0);
+            var today18 = new Date(now);
+            today18.setHours(18, 0, 0, 0);
+            
+            //從今天午夜算起
+            if(startFrom0){
+                nowTime.setHours(0, 0, 0, 0);
+            }
+            //活動今天就結束
+            if(!eventEndTomorrow){
+                endTime.setDate(nowTime.getDate() + 1);
+            }
+            else{
+                totalD += 60; //明天大師兄的60包子
+                totalD += 100; //明天的廣告包子
+            }
+            var diffMs = (endTime - nowTime); // milliseconds between nowTime & endTime
+            var diffMins = Math.round(diffMs/ 60000); // 活動結束前還有幾分鐘
+            var addDumplings = Math.floor(diffMins / 3); //自然回復的包子
+            totalD +=  dumplingQ;
+            totalD += addDumplings;
+            //計算中午跟下午多的30包
+            if(today12 > nowTime){
+                totalD += 30
+            }
+            if(today18 > nowTime){
+                totalD += 30
+            }
+            totalD += (10 * adQ); //廣告包子
+            totalD += (5 * flowers); //送花包子
+            totalD += (30 * buy); //買包子
+            totalD += (30 * dumplingToolQ); //一屜包子道具包子
+
+            var doubleE = doubles * 50; //雙倍券有效基數
+            if(doubleE > totalD){
+                doubleE = totalD;
+            }
+
+            //計算
+            totalPoints += totalD * bossLevel; //基礎分
+            totalPoints += totalD * chairBuffP; //椅子加成分
+            totalPoints += totalD * womanBuffP; //紅顏加成分
+            totalPoints += doubleE * doubleBuffP; //雙倍加成分
+            if(enableWeapon){
+                var weaponDurability = parseInt($('#weaponDurability').val()); //神兵耐久
+                var weaponBuffP = Math.floor(bossLevel * 0.5); //神兵加成分
+                var beggar = $('#beggar').is(":checked"); //丐幫是否勾選
+                if(beggar){
+                    weaponDurability /= 2;
+                    weaponDurability = Math.floor(weaponDurability);
+                }
+                if(weaponDurability > totalD){
+                    weaponDurability = totalD;
+                }
+                totalPoints += weaponDurability * weaponBuffP; //神兵加成分
+            }
+
+            $('#points').html(totalPoints);
+            $('#totalDumplings').html(totalD);
+        }
+    </script>
+</body>
+
+</html>
